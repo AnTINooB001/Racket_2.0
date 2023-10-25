@@ -13,20 +13,20 @@ void Racket::Create()
 	int width = 160;
 	int px = 10;
 	//racket.setPosition(x, y);
-	racket.setPointCount(13);
-	racket.setPoint(0, sf::Vector2f(x, y - height));
-	racket.setPoint(1, sf::Vector2f(x + px/2, y - height + px));
-	racket.setPoint(2, sf::Vector2f(x + px/2, y - px * 4));
-	racket.setPoint(3, sf::Vector2f(x + px * 2, y - px * 4));
-	racket.setPoint(4, sf::Vector2f(x + px * 2, y - px * 2));
-	racket.setPoint(5, sf::Vector2f(x + px * 8, y - px * 2));
-	racket.setPoint(6, sf::Vector2f(x + px * 8, y));
-	racket.setPoint(7, sf::Vector2f(x - px * 8, y));
-	racket.setPoint(8, sf::Vector2f(x - px * 8, y - px*2));
-	racket.setPoint(9, sf::Vector2f(x - px * 2, y - px * 2));
-	racket.setPoint(10, sf::Vector2f(x - px * 2, y - px * 4));
-	racket.setPoint(11, sf::Vector2f(x - px/2, y - px * 4));
-	racket.setPoint(12, sf::Vector2f(x - px / 2, y - px * 7));
+	//racket.setPointCount(13);
+	//racket.setPoint(0, sf::Vector2f(x, y - height));
+	//racket.setPoint(1, sf::Vector2f(x + px/2, y - height + px));
+	//racket.setPoint(2, sf::Vector2f(x + px/2, y - px * 4));
+	//racket.setPoint(3, sf::Vector2f(x + px * 2, y - px * 4));
+	//racket.setPoint(4, sf::Vector2f(x + px * 2, y - px * 2));
+	//racket.setPoint(5, sf::Vector2f(x + px * 8, y - px * 2));
+	//racket.setPoint(6, sf::Vector2f(x + px * 8, y));
+	//racket.setPoint(7, sf::Vector2f(x - px * 8, y));
+	//racket.setPoint(8, sf::Vector2f(x - px * 8, y - px*2));
+	//racket.setPoint(9, sf::Vector2f(x - px * 2, y - px * 2));
+	//racket.setPoint(10, sf::Vector2f(x - px * 2, y - px * 4));
+	//racket.setPoint(11, sf::Vector2f(x - px/2, y - px * 4));
+	//racket.setPoint(12, sf::Vector2f(x - px / 2, y - px * 7));
 
 	//racket.setFillColor(sf::Color::Yellow);
 }

@@ -29,7 +29,6 @@ void Star::Create()
 void Star::reborn()
 {
 	int x = (rand() % 1198) + 1;
-	int y = 0;
 	star.setPosition(sf::Vector2f(x, -600));
 }
 
