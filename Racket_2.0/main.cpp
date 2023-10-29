@@ -6,6 +6,9 @@ int main()
     
     srand(time(NULL));
     sf::RenderWindow window(sf::VideoMode(map_width, map_height), "Racket 2");
+    sf::Image icon;
+    icon.loadFromFile("textures\\racket.png");
+    window.setIcon(100, 90, icon.getPixelsPtr());
     window.setVerticalSyncEnabled(true);
     int max_score = 0;
 start:
@@ -62,7 +65,7 @@ start:
     bool game_over = false;
     //---------------------------------------------------meteores-------------------------------------------
     const int meteor_count = 15;
-    Meteor meteores[meteor_count];
+    Meteor* meteores = new Meteor[meteor_count];
     sf::Texture meteor_t;
     meteor_t.loadFromFile("textures\\meteor.png");
     for (int i = 0; i < meteor_count; i++)
