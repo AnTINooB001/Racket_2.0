@@ -135,8 +135,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Meteor.cpp" />
     <ClCompile Include="Racket.cpp" />
     <ClCompile Include="Star.cpp" />
   </ItemGroup>
@@ -154,8 +155,10 @@
     <None Include="sfml-window-d-2.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="GameLib.h" />
-    <ClInclude Include="Object.h" />
+    <ClInclude Include="map_settings.h" />
+    <ClInclude Include="Meteor.h" />
     <ClInclude Include="Racket.h" />
     <ClInclude Include="Star.h" />
   </ItemGroup>

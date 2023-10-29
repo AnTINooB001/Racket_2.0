@@ -1,17 +1,17 @@
 #pragma once
 
-#include "Object.h"
+#include <SFML/Graphics.hpp>
 
-class Star : public Object
+
+class Star
 {
 public:
 	Star();
-	void Create() override;
-	void reborn();
-	void draw(sf::RenderWindow& wnd) override;
-	void move(float) override;
-	int get_x() const;
-	int get_y() const;
+	virtual void reborn();
+	virtual void draw(sf::RenderWindow& wnd) ;
+	virtual void move(float);
+	virtual int get_x() const;
+	virtual int get_y() const;
 private:
 	sf::ConvexShape star;
 };
