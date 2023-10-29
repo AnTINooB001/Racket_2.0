@@ -7,7 +7,7 @@ int main()
     srand(time(NULL));
     sf::RenderWindow window(sf::VideoMode(map_width, map_height), "Racket 2");
     window.setVerticalSyncEnabled(true);
-
+    int max_score = 0;
 start:
     //------------------------------------------------------------background-----------------------------------------------
     sf::RectangleShape back_g(sf::Vector2f(1200, 600));
@@ -100,6 +100,7 @@ start:
     stone_break.setBuffer(stone_break_b);
  //-----------------------------------------------------------------Lose text-----------------
     sf::Text end("YOU LOSE", font, 10);
+    sf::Text max_score_t("", font, 10);
  //-------------------------------------------------main while----------------------------------------------
     while (window.isOpen())
     {
@@ -286,16 +287,27 @@ start:
         //----------------------------game over-----------------------------------------------
         if (game_over)
         {
+            if (max_score < score)
+                max_score = score;
+
+            std::ostringstream os;
+            os << max_score;
+
+            max_score_t.setString("Max Score: " + os.str());
+            max_score_t.setScale(10, 10);
+            max_score_t.setPosition(map_width / 2 - 370, map_height / 2 + 40);
             end.setScale(10, 10);
-            end.setPosition(map_width / 2- 220, map_height / 2-40);
+            end.setPosition(map_width / 2- 370, map_height / 2-40);
             sf::Clock timer_end;
-            
-            while (timer_end.getElapsedTime().asSeconds() < 2)
-            {
-                
-                window.draw(end);
-                window.display();
-            }
+            end.setString(end.getString() + " "+text.getString());
+            window.draw(max_score_t);
+            window.draw(end);
+            window.display();
+            while (timer_end.getElapsedTime().asSeconds() < 2);
+            window.display();
+            while (timer_end.getElapsedTime().asSeconds() < 2);
+            window.display();
+
             goto start;
         }
     }
