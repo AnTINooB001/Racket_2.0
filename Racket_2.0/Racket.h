@@ -17,6 +17,7 @@ public:
 	void left_ammo_move(float);
 	void set_fired_left_ammo(bool);
 	void set_fired_right_ammo(bool);
+	void set_texture(sf::Texture*);
 	bool get_fired_left_ammo() const;
 	bool get_fired_right_ammo() const;
 	void reset_right_ammo();
@@ -33,5 +34,6 @@ private:
 	Bullet r_ammo;
 	bool fired_left_ammo;
 	bool fired_right_ammo;
+	sf::RectangleShape rec;
 };
 

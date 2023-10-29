@@ -58,5 +58,5 @@ int Bullet::get_y() const
 int Bullet::get_r() const
 {
 	return bullet.getRadius();
-}
+} 
 

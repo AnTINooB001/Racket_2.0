@@ -1,5 +1,5 @@
 ﻿#include "GameLib.h"
-#include <vector>
+
 
 int main()
 {
@@ -9,7 +9,7 @@ int main()
     window.setVerticalSyncEnabled(true);
 
 start:
-
+    //------------------------------------------------------------background-----------------------------------------------
     sf::RectangleShape back_g(sf::Vector2f(1200, 600));
     sf::Texture back_ground_t;
     back_ground_t.loadFromFile("textures\\map.png");
@@ -46,25 +46,61 @@ start:
     back_ground_t5.loadFromFile("textures\\map5.png");
     back_g5.setTexture(&back_ground_t5);
     back_g5.setPosition(sf::Vector2f(0, -3000));
-
+    //---------------------------------------------------------racket--------------------------------
     Racket racket;
-
+    sf::Texture r_t;
+    r_t.loadFromFile("textures\\racket.png");
+    racket.set_texture(&r_t);
+//-----------------------------------------------------------------stars--------------------------------------
     std::vector<Star> stars(100);
+    //-----------------------------------------------------------------------values---------------------------
     sf::Clock timer,left_bullet_timer, right_bullet_timer;
     float map_speed, star_speed,time, racket_speed,bullet_speed,meteor_speed;
     sf::Vector2f new_racket_pos;
     bool reset_left_bullet_clock = false;
     bool reset_right_bullet_clock = false;
+    bool game_over = false;
+    //---------------------------------------------------meteores-------------------------------------------
     const int meteor_count = 15;
     Meteor meteores[meteor_count];
     sf::Texture meteor_t;
-    meteor_t.loadFromFile("textures.meteor.png");
+    meteor_t.loadFromFile("textures\\meteor.png");
     for (int i = 0; i < meteor_count; i++)
     {
         meteores[i].set_texture(&meteor_t);
     }
+    //--------------------------------------------Score------------------------------------------------
+    int score = 0;
+    sf::Font font;
+    font.loadFromFile("textures\\sr.TTF");
+    sf::Text text("", font,20);
+    text.setStyle(sf::Text::Bold);
+    text.setPosition(sf::Vector2f(1050, 10));
+    //------------------------------------------------------------back ground music----------------------------------------
+    sf::Music music_back_g;
+    if (!music_back_g.openFromFile("textures\\back_g_music.mp3"))
+        return 2;
+    music_back_g.setLoop(true);
+    music_back_g.play();
+    music_back_g.setVolume(50);
+    //-----------------------------------------------racket fire sound----------------------------------------------------
+    sf::Sound fire, stone_break;
+    sf::SoundBuffer fire_b, stone_break_b;
+    fire_b.loadFromFile("textures\\racket_blast.mp3");
+    fire.setBuffer(fire_b);
+    fire.setVolume(10);
 
-    bool game_over = false;
+    sf::Sound fire2;
+    sf::SoundBuffer fire_b2;
+    fire_b2.loadFromFile("textures\\racket_blast2.mp3");
+    fire2.setBuffer(fire_b2);
+    fire2.setVolume(10);
+// ------------------------------------------------------------------break stone sound--------------------------
+    stone_break_b.loadFromFile("textures\\break_stone.mp3");
+    stone_break.setBuffer(stone_break_b);
+ //-----------------------------------------------------------------Lose text-----------------
+    sf::Text end("YOU LOSE", font, 10);
+ //-------------------------------------------------main while----------------------------------------------
     while (window.isOpen())
     {
         time = timer.getElapsedTime().asMicroseconds();
@@ -79,6 +115,7 @@ start:
         sf::Event my_event;
         while (window.pollEvent(my_event))
         {
+
             if (my_event.type == sf::Event::Closed)
                 window.close();
 
@@ -124,6 +161,7 @@ start:
         // left ammo
         if (racket.get_fired_left_ammo())
         {
+            //fire.play();
             if(!reset_left_bullet_clock)
                 left_bullet_timer.restart();
             reset_left_bullet_clock = true;
@@ -131,12 +169,15 @@ start:
         }
         if ((int)left_bullet_timer.getElapsedTime().asMilliseconds() > 300 && racket.get_fired_left_ammo() == true)
         {
+            
             racket.set_fired_left_ammo(false);
             reset_left_bullet_clock = false;
+            fire2.play();
         }
         // right ammo
         if (racket.get_fired_right_ammo())
         {
+            
             if (!reset_right_bullet_clock)
                 right_bullet_timer.restart();
             reset_right_bullet_clock = true;
@@ -144,10 +185,11 @@ start:
         }
         if ((int)right_bullet_timer.getElapsedTime().asMilliseconds() > 300 && racket.get_fired_right_ammo() == true)
         {
+            fire.play();
             racket.set_fired_right_ammo(false);
             reset_right_bullet_clock = false;
         }
-        //------------------------------------------meteores------------------------------------
+        //------------------------------------------meteores move and rotate------------------------------------
         for (int i = 0; i < meteor_count; i++)
         {
             meteores[i].move(meteor_speed);
@@ -155,7 +197,7 @@ start:
         for (int i = 0; i < meteor_count; i++)
         {
             meteores[i].rotate(1);
-        }
+        } 
         
         //-------------------------------------------------racket move--------------------------------------------------
         racket.move(new_racket_pos);
@@ -186,7 +228,11 @@ start:
                 racket.reset_left_ammo();
                 racket.left_ammo_move(0);
                 if (meteores[i].get_health() <= 0)
+                {
+                    score++;
+                    stone_break.play();
                     meteores[i].reborn();
+                }
                 else
                     meteores[i].decrement_health();
             }
@@ -195,7 +241,10 @@ start:
                 racket.reset_right_ammo();
                 racket.right_ammo_move(0);
                 if (meteores[i].get_health() <= 0)
+                {
+                    score++;
                     meteores[i].reborn();
+                }
                 else
                     meteores[i].decrement_health();
             }
@@ -204,6 +253,7 @@ start:
                 game_over = true;
                 break;
             }
+            
         }
 
         //-------------------------------------------------------stars create-----------------------------------------
@@ -217,7 +267,7 @@ start:
         window.draw(back_g3);
         window.draw(back_g4);
         window.draw(back_g5);
-        //--------------------------------------------------------------draw stars-----------------------------------
+        //--------------------------------------------------------------draw stars and meteores-----------------------------------
         for (int i = 0; i < stars.size(); i++)
             stars[i].draw(window);
         for (int i = 0; i < meteor_count; i++)
@@ -226,9 +276,28 @@ start:
         }
         //-----------------------------------------------------------draw racket----------------------
         racket.draw(window);
+        //---------------------------------draw score-------------------------------------------------
+        std::ostringstream os;
+        os << score;
+        text.setString("Score: " + os.str());
+        window.draw(text);
+
         window.display();
+        //----------------------------game over-----------------------------------------------
         if (game_over)
+        {
+            end.setScale(10, 10);
+            end.setPosition(map_width / 2- 220, map_height / 2-40);
+            sf::Clock timer_end;
+            
+            while (timer_end.getElapsedTime().asSeconds() < 2)
+            {
+                
+                window.draw(end);
+                window.display();
+            }
             goto start;
+        }
     }
 
     return 0;

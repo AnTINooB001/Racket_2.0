@@ -14,7 +14,6 @@ void Racket::Create()
 	width = 10; // in px
 	
 	racket.setPosition(sf::Vector2f(x, y));
-	//racket.setOrigin(sf::Vector2f(x, y));
 	racket.setPointCount(13);
 	racket.setPoint(0, sf::Vector2f(0, 0-px*height));
 	racket.setPoint(1, sf::Vector2f(0 + px, 0 - px *4));
@@ -35,11 +34,13 @@ void Racket::Create()
 	l_gun.setPosition(x - px * width / 2, y - px * 7 + px/2);
 	l_gun.setOrigin(sf::Vector2f(px / 2 / 2, 3.5));
 	left_gun = l_gun;
+	left_gun.setFillColor(sf::Color::Red);
 
 	sf::RectangleShape r_gun(sf::Vector2f(px / 2, px * 6));
 	r_gun.setPosition(x + px * width / 2, y - px * 7 + px/2);
 	r_gun.setOrigin(sf::Vector2f(px / 2 / 2, 3.5));
 	right_gun = r_gun;
+	right_gun.setFillColor(sf::Color::Red);
 
 	fired_left_ammo = false;
 	fired_right_ammo = false;
@@ -110,6 +111,11 @@ void Racket::set_fired_left_ammo(bool s)
 void Racket::set_fired_right_ammo(bool s)
 {
 	fired_right_ammo = s;
+}
+
+void Racket::set_texture(sf::Texture* texture)
+{
+	racket.setTexture(texture);
 }
 
 bool Racket::get_fired_left_ammo() const

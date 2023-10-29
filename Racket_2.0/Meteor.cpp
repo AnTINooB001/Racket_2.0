@@ -15,7 +15,6 @@ void Meteor::reborn()
 	meteor.setPosition(sf::Vector2f(x, y));
 	meteor.setRadius(rad);
 	//meteor.setScale(sf::Vector2f(1, s));
-
 }
 
 void Meteor::draw(sf::RenderWindow& wnd)
