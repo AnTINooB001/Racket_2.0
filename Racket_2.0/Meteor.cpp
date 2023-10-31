@@ -14,7 +14,6 @@ void Meteor::reborn()
 	int s = ((rand() % 2)*1.0+1)*1.0 / 1.5;
 	meteor.setPosition(sf::Vector2f(x, y));
 	meteor.setRadius(rad);
-	//meteor.setScale(sf::Vector2f(1, s));
 }
 
 void Meteor::draw(sf::RenderWindow& wnd)
@@ -24,7 +23,7 @@ void Meteor::draw(sf::RenderWindow& wnd)
 
 void Meteor::move(float time)
 {
-	int x = 2; //(rand() % 2);
+	int x = 2;
 	meteor.move(sf::Vector2f(x, time * 0.65));
 	if (meteor.getPosition().y > 600+rad*2)
 		reborn();

@@ -6,15 +6,16 @@ Racket::Racket()
 }
 
 void Racket::Create()
-{														// height 80
-	int x = map_width/2;								// width 160
+{													
+	int x = map_width/2;								
 	int y = map_height/2;
 	px = 10;
 	height = 9;	// in px
 	width = 10; // in px
-	
+	//------------------------------------------------------draw model------------------------
 	racket.setPosition(sf::Vector2f(x, y));
 	racket.setPointCount(13);
+
 	racket.setPoint(0, sf::Vector2f(0, 0-px*height));
 	racket.setPoint(1, sf::Vector2f(0 + px, 0 - px *4));
 	racket.setPoint(2, sf::Vector2f(0 + px*2, 0- px * 4));
@@ -22,33 +23,33 @@ void Racket::Create()
 	racket.setPoint(4, sf::Vector2f(0 + px * width / 2, 0 - px));
 	racket.setPoint(5, sf::Vector2f(0 + px, 0 - px));
 	racket.setPoint(6, sf::Vector2f(0 + px, 0));
-	//---------------------------------------------------
+	//---------------------------------------------------left side
 	racket.setPoint(7, sf::Vector2f(0 - px, 0));
 	racket.setPoint(8, sf::Vector2f(0 - px, 0-px));
 	racket.setPoint(9, sf::Vector2f(0 - px * width / 2, 0 - px));
 	racket.setPoint(10, sf::Vector2f(0 - px * width / 2, 0 - px * 4));
 	racket.setPoint(11, sf::Vector2f(0 - px * 2, 0 - px * 4));
 	racket.setPoint(12, sf::Vector2f(0 - px, 0 - px * 4));
-
+	//---------------------------------------------------------------set guns---------------------------------
 	sf::RectangleShape l_gun(sf::Vector2f(px / 2, px * 6));
 	l_gun.setPosition(x - px * width / 2, y - px * 7 + px/2);
 	l_gun.setOrigin(sf::Vector2f(px / 2 / 2, 3.5));
-	left_gun = l_gun;
+	left_gun = std::move(l_gun);
 	left_gun.setFillColor(sf::Color::Red);
 
 	sf::RectangleShape r_gun(sf::Vector2f(px / 2, px * 6));
 	r_gun.setPosition(x + px * width / 2, y - px * 7 + px/2);
 	r_gun.setOrigin(sf::Vector2f(px / 2 / 2, 3.5));
-	right_gun = r_gun;
+	right_gun = std::move(r_gun);
 	right_gun.setFillColor(sf::Color::Red);
-
+	//---------------------------------------set ammos
 	fired_left_ammo = false;
 	fired_right_ammo = false;
 
-	l_ammo = Bullet(left_gun.getPosition().x - 2, left_gun.getPosition().y,2,6);
+	l_ammo = std::move(Bullet(left_gun.getPosition().x - 2, left_gun.getPosition().y,2,6));
 	l_ammo.set_color(sf::Color::Green);
 
-	r_ammo = Bullet(right_gun.getPosition().x - 2, right_gun.getPosition().y, 2, 6);
+	r_ammo = std::move(Bullet(right_gun.getPosition().x - 2, right_gun.getPosition().y, 2, 6));
 	r_ammo.set_color(sf::Color::Green);
 }
 

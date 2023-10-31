@@ -5,7 +5,7 @@ Star::Star()
 	int x = (rand() % 1198);
 	int y = (rand() % 598) + 1;
 	star.setPosition(sf::Vector2f(x, y));
-
+	//-----------------------------------------------draw model-------------------------------
 	star.setPointCount(9);
 	star.setPoint(0, sf::Vector2f(x, y - 4));
 	star.setPoint(1, sf::Vector2f(x + 1, y - 1));
@@ -16,6 +16,7 @@ Star::Star()
 	star.setPoint(6, sf::Vector2f(x - 4, y));
 	star.setPoint(7, sf::Vector2f(x + 1, y - 1));
 	star.setPoint(8, sf::Vector2f(x, y - 4));
+	//----------------------------------------------------------------------------------------
 	star.setFillColor(sf::Color::White);
 }
 

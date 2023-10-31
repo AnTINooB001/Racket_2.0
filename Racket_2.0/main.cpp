@@ -7,7 +7,8 @@ int main()
     srand(time(NULL));
     sf::RenderWindow window(sf::VideoMode(map_width, map_height), "Racket 2");
     sf::Image icon;
-    icon.loadFromFile("textures\\racket.png");
+    if (!icon.loadFromFile("textures\\racket.png"))
+        return 1;
     window.setIcon(100, 90, icon.getPixelsPtr());
     window.setVerticalSyncEnabled(true);
     int max_score = 0;
@@ -15,25 +16,29 @@ start:
     //------------------------------------------------------------background-----------------------------------------------
     sf::RectangleShape back_g(sf::Vector2f(1200, 600));
     sf::Texture back_ground_t;
-    back_ground_t.loadFromFile("textures\\map.png");
+    if(!back_ground_t.loadFromFile("textures\\map.png"))
+        return 2;
     back_g.setTexture(&back_ground_t);
     back_g.setPosition(sf::Vector2f(0, 0));
 
     sf::RectangleShape back_g2(sf::Vector2f(1200, 600));
     sf::Texture back_ground_t2;
-    back_ground_t2.loadFromFile("textures\\map2.png");
+    if(!back_ground_t2.loadFromFile("textures\\map2.png"))
+        return 2;
     back_g2.setTexture(&back_ground_t2);
     back_g2.setPosition(sf::Vector2f(0, -600));
 
     sf::RectangleShape beetwen2and3(sf::Vector2f(1200, 600));
     sf::Texture beetwen2and3_t;
-    beetwen2and3_t.loadFromFile("textures\\beetwen2and3.png");
+    if(!beetwen2and3_t.loadFromFile("textures\\beetwen2and3.png"))
+        return 2;
     beetwen2and3.setTexture(&beetwen2and3_t);
     beetwen2and3.setPosition(sf::Vector2f(0, -1200));
 
     sf::RectangleShape back_g3(sf::Vector2f(1200, 600));
     sf::Texture back_ground_t3;
-    back_ground_t3.loadFromFile("textures\\map3.png");
+    if(!back_ground_t3.loadFromFile("textures\\map3.png"))
+        return 2;
     back_g3.setTexture(&back_ground_t3);
     back_g3.setPosition(sf::Vector2f(0, -1800));
 
@@ -46,13 +51,15 @@ start:
 
     sf::RectangleShape back_g5(sf::Vector2f(1200, 600));
     sf::Texture back_ground_t5;
-    back_ground_t5.loadFromFile("textures\\map5.png");
+    if(!back_ground_t5.loadFromFile("textures\\map5.png"))
+        return 2;
     back_g5.setTexture(&back_ground_t5);
     back_g5.setPosition(sf::Vector2f(0, -3000));
     //---------------------------------------------------------racket--------------------------------
     Racket racket;
     sf::Texture r_t;
-    r_t.loadFromFile("textures\\racket.png");
+    if(!r_t.loadFromFile("textures\\racket.png"))
+        return 3;
     racket.set_texture(&r_t);
 //-----------------------------------------------------------------stars--------------------------------------
     std::vector<Star> stars(100);
@@ -64,10 +71,11 @@ start:
     bool reset_right_bullet_clock = false;
     bool game_over = false;
     //---------------------------------------------------meteores-------------------------------------------
-    const int meteor_count = 15;
-    Meteor* meteores = new Meteor[meteor_count];
+    constexpr int meteor_count = 15;
+    std::vector<Meteor> meteores(meteor_count);
     sf::Texture meteor_t;
-    meteor_t.loadFromFile("textures\\meteor.png");
+    if(!meteor_t.loadFromFile("textures\\meteor.png"))
+        return 4;
     for (int i = 0; i < meteor_count; i++)
     {
         meteores[i].set_texture(&meteor_t);
@@ -75,27 +83,30 @@ start:
     //--------------------------------------------Score------------------------------------------------
     int score = 0;
     sf::Font font;
-    font.loadFromFile("textures\\sr.TTF");
+    if(!font.loadFromFile("textures\\sr.TTF"))
+        return 5;
     sf::Text text("", font,20);
     text.setStyle(sf::Text::Bold);
     text.setPosition(sf::Vector2f(1050, 10));
     //------------------------------------------------------------back ground music----------------------------------------
     sf::Music music_back_g;
     if (!music_back_g.openFromFile("textures\\back_g_music.mp3"))
-        return 2;
+        return 6;
     music_back_g.setLoop(true);
     music_back_g.play();
     music_back_g.setVolume(50);
     //-----------------------------------------------racket fire sound----------------------------------------------------
     sf::Sound fire, stone_break;
     sf::SoundBuffer fire_b, stone_break_b;
-    fire_b.loadFromFile("textures\\racket_blast.mp3");
+    if(!fire_b.loadFromFile("textures\\racket_blast.mp3"))
+        return 7;
     fire.setBuffer(fire_b);
     fire.setVolume(10);
 
     sf::Sound fire2;
     sf::SoundBuffer fire_b2;
-    fire_b2.loadFromFile("textures\\racket_blast2.mp3");
+    if(!fire_b2.loadFromFile("textures\\racket_blast2.mp3"))
+        return 8;
     fire2.setBuffer(fire_b2);
     fire2.setVolume(10);
 // ------------------------------------------------------------------break stone sound--------------------------
@@ -310,7 +321,6 @@ start:
             window.display();
             while (timer_end.getElapsedTime().asSeconds() < 2);
             window.display();
-
             goto start;
         }
     }
